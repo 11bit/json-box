@@ -1,13 +1,18 @@
 import { style, globalStyle } from "@vanilla-extract/css";
 
 export const container = style({
-  width: "100vw",
   height: "100vh",
 });
 
+export const panels = style({
+  width: "100%",
+  height: "100%",
+  background: "#282a36",
+});
+
 export const handle = style({
-  background: "#000000bf",
-  width: "3px",
+  background: "#0A0B0E",
+  width: 4,
 });
 
 export const sidebarContainer = style({
@@ -31,6 +36,11 @@ export const sidebarListItemTitle = style({
 });
 
 globalStyle("body", {
-  background: "#282a36",
+  background: "#0A0B0E",
   color: "white",
+  margin: 8,
+});
+
+globalStyle("html", {
+  overflow: "hidden",
 });

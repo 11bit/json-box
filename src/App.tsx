@@ -7,6 +7,7 @@ import { Codemirror } from "./Codemirror";
 import {
   container,
   handle,
+  panels,
   sidebarContainer,
   sidebarList,
   sidebarListItem,
@@ -70,7 +71,9 @@ function Pipeline({ name }: { name: string }) {
         placeholder="Drag'n'drop json file"
         extensions={[javascript()]}
         value={pipeline.code}
-        onChange={(value) => setPipeline((p) => ({ ...p, code: value }))}
+        onChange={(value) => {
+          setPipeline((p) => ({ ...p, name: p.name || "", code: value }));
+        }}
       />
     </DropZone>
   );
@@ -94,7 +97,7 @@ function Results({ name }: { name: string }) {
 function App() {
   return (
     <div className={container}>
-      <PanelGroup autoSaveId="main" direction="horizontal">
+      <PanelGroup autoSaveId="main" direction="horizontal" className={panels}>
         <Panel defaultSize={10}>
           <Sidebar />
         </Panel>
