@@ -16,6 +16,7 @@ import {
 import { filesDb, getNewNotebook, notebooksDb, ui } from "./store";
 import { evaluate } from "./evaluate";
 import { DropZone } from "./Dropzone";
+import { cmLoadExpressionWidget } from "./cm-load-widget";
 
 function Sidebar() {
   const files = useAtomValue(filesDb.entries);
@@ -65,7 +66,7 @@ function Notebook() {
     >
       <Codemirror
         placeholder="Drag'n'drop json file"
-        extensions={[javascript()]}
+        extensions={[javascript(), cmLoadExpressionWidget]}
         value={pipeline.code}
         onChange={(value) => {
           setPipeline({ ...pipeline, code: value });
