@@ -39,8 +39,8 @@ export const notebooksDb = new MiniDb<Notebook>({
     default: {
       name: "Jupiter's moons",
       code: `load("${PLANETS_ID}")
-\t.planets
-\t.filter(planet => planet.name === "Jupiter")`,
+  .planets
+  .filter(p => p.name === "Jupiter")`,
     },
   },
 });

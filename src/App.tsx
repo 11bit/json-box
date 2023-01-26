@@ -5,13 +5,16 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 import { Codemirror } from "./Codemirror";
 import {
+  box,
   container,
   handle,
+  header,
   panels,
   sidebarContainer,
   sidebarList,
   sidebarListItem,
   sidebarListItemTitle,
+  sidebarPanel,
 } from "./main.css";
 import { filesDb, getNewNotebook, notebooksDb, ui } from "./store";
 import { evaluate } from "./evaluate";
@@ -27,27 +30,31 @@ function Sidebar() {
 
   return (
     <div className={sidebarContainer}>
-      Files:
-      <ul className={sidebarList}>
-        {files.map(([id, file]) => (
-          <li key={id} className={sidebarListItem}>
-            <div className={sidebarListItemTitle}>{file.name}</div>
-            <button onClick={() => addFilesToNotebook(activeId, [id])}>
-              insert
-            </button>
-            <button onClick={() => del(id)}>del</button>
-          </li>
-        ))}
-      </ul>
-      Notebooks:
-      <ul className={sidebarList}>
-        {notebooks.map(([id, file]) => (
-          <li key={id} className={sidebarListItem}>
-            <div className={sidebarListItemTitle}>{file.name}</div>
-            <button onClick={() => del(id)}>del</button>
-          </li>
-        ))}
-      </ul>
+      <Header>Files</Header>
+      <div className={sidebarPanel}>
+        <ul className={sidebarList}>
+          {files.map(([id, file]) => (
+            <li key={id} className={sidebarListItem}>
+              <div className={sidebarListItemTitle}>{file.name}</div>
+              <button onClick={() => addFilesToNotebook(activeId, [id])}>
+                insert
+              </button>
+              <button onClick={() => del(id)}>del</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className={sidebarPanel}>
+        <Header>Notebooks</Header>
+        <ul className={sidebarList}>
+          {notebooks.map(([id, file]) => (
+            <li key={id} className={sidebarListItem}>
+              <div className={sidebarListItemTitle}>{file.name}</div>
+              <button onClick={() => del(id)}>del</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
@@ -92,7 +99,13 @@ function Results() {
   );
 }
 
+function Header({ children }: React.PropsWithChildren<{}>) {
+  return <div className={header}>{children}</div>;
+}
+
 function App() {
+  const selectedNotebook = useAtomValue(ui.selectedNotebook);
+
   return (
     <div className={container}>
       <PanelGroup autoSaveId="main" direction="horizontal" className={panels}>
@@ -101,10 +114,12 @@ function App() {
         </Panel>
         <PanelResizeHandle className={handle} />
         <Panel defaultSize={40}>
+          <Header>{selectedNotebook}</Header>
           <Notebook />
         </Panel>
         <PanelResizeHandle className={handle} />
         <Panel>
+          <Header>Output</Header>
           <Results />
         </Panel>
       </PanelGroup>

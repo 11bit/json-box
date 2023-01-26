@@ -7,7 +7,7 @@ export const dropzone = recipe({
   variants: {
     active: {
       yes: { border: "3px green dashed" },
-      no: { margin: "3px" },
+      no: {},
     },
   },
 });
