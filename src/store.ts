@@ -1,6 +1,8 @@
 import { MiniDb } from "jotai-minidb";
 import { atom } from "jotai/vanilla";
 
+import planets from "./planets.json";
+
 // UI state
 export const ui = {
   selectedNotebook: atom("default"),
@@ -17,6 +19,9 @@ export const ui = {
   ),
 };
 
+// Bootstrap data
+const PLANETS_ID = "a6e02a19-52ad-45b0-bd04-bcfb716c5bab";
+
 // Notebooks
 export type Notebook = {
   name: string;
@@ -28,7 +33,17 @@ export function getNewNotebook(): Notebook {
     code: "",
   };
 }
-export const notebooksDb = new MiniDb<Notebook>({ name: "pipelines" });
+export const notebooksDb = new MiniDb<Notebook>({
+  name: "notebooks",
+  initialData: {
+    default: {
+      name: "Jupiter's moons",
+      code: `load("${PLANETS_ID}")
+\t.planets
+\t.filter(planet => planet.name === "Jupiter")`,
+    },
+  },
+});
 
 // Files
 export type JsonFile = {
@@ -39,4 +54,11 @@ export type JsonFile = {
 
 export const filesDb = new MiniDb<JsonFile>({
   name: "files",
+  initialData: {
+    [PLANETS_ID]: {
+      name: "planets.json",
+      createdAt: Date.now(),
+      content: JSON.stringify(planets),
+    },
+  },
 });
