@@ -508,6 +508,11 @@
   dependencies:
     "@lezer/common" "^1.0.0"
 
+"@rocicorp/resolver@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@rocicorp/resolver/-/resolver-1.0.0.tgz#aa3e94fcd72b421516c9f076981e75e838c4ebf4"
+  integrity sha512-iK0QW74BKR0ogY4QwBEAMoevqypi5S/jjKqL6mc7KH7z2PFuOinOebsD1Ol8VIxrh23IPrMNwDNSrnfhKga9Vw==
+
 "@types/prop-types@*":
   version "15.7.5"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
@@ -902,11 +907,12 @@ javascript-stringify@^2.0.1:
   resolved "https://registry.yarnpkg.com/javascript-stringify/-/javascript-stringify-2.1.0.tgz#27c76539be14d8bd128219a2d731b09337904e79"
   integrity sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==
 
-jotai-minidb@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/jotai-minidb/-/jotai-minidb-0.0.4.tgz#44c969a5e5353912e2a626751be729133b767e4d"
-  integrity sha512-UJE8XPyeh5UAwR1UOhAvH6VvhjypCG8V3kxgMRND4j9Xc3yrHKk2wuGVZlpf56rL/KM09OJcoWErEu5Y4VfNjA==
+jotai-minidb@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/jotai-minidb/-/jotai-minidb-0.0.5.tgz#6b88d04a9c4f5ccbece84ea0e06e730e8dd39058"
+  integrity sha512-u84yp3cdYpqvb3W9pJMnmSqqF1+1N/q62tBzaHCgWiRPfR84Wt23duUlVbTKpK2lYjrcQ8GDzvD53Hmp2ZSNhw==
   dependencies:
+    "@rocicorp/resolver" "^1.0.0"
     idb-keyval "^6.2.0"
 
 jotai@^1.13.1:

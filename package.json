@@ -15,7 +15,7 @@
     "@uiw/react-codemirror": "^4.19.7",
     "@vanilla-extract/recipes": "^0.3.0",
     "jotai": "^1.13.1",
-    "jotai-minidb": "^0.0.4",
+    "jotai-minidb": "^0.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
