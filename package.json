@@ -11,6 +11,7 @@
   "dependencies": {
     "@codemirror/lang-javascript": "^6.1.2",
     "@codemirror/lang-json": "^6.0.1",
+    "@reach/menu-button": "^0.18.0",
     "@uiw/codemirror-theme-dracula": "^4.19.7",
     "@uiw/react-codemirror": "^4.19.7",
     "@vanilla-extract/recipes": "^0.3.0",

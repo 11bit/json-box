@@ -1,3 +1,5 @@
+import "@reach/menu-button/styles.css";
+
 import { javascript } from "@codemirror/lang-javascript";
 import { json } from "@codemirror/lang-json";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
@@ -8,7 +10,12 @@ import {
   box,
   container,
   handle,
+  handleHorizontal,
   header,
+  menuButton,
+  menuItem,
+  menuList,
+  menuTriangle,
   panels,
   sidebarContainer,
   sidebarList,
@@ -20,10 +27,10 @@ import { filesDb, getNewNotebook, notebooksDb, ui } from "./store";
 import { evaluate } from "./evaluate";
 import { DropZone } from "./Dropzone";
 import { cmLoadExpressionWidget } from "./cm-load-widget";
+import { Menu, MenuButton, MenuItem, MenuList } from "@reach/menu-button";
 
 function Sidebar() {
   const files = useAtomValue(filesDb.entries);
-  const notebooks = useAtomValue(notebooksDb.entries);
   const del = useSetAtom(filesDb.delete);
   const addFilesToNotebook = useSetAtom(ui.addFilesToNotebook);
   const activeId = useAtomValue(ui.selectedNotebook);
@@ -39,17 +46,6 @@ function Sidebar() {
               <button onClick={() => addFilesToNotebook(activeId, [id])}>
                 insert
               </button>
-              <button onClick={() => del(id)}>del</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className={sidebarPanel}>
-        <Header>Notebooks</Header>
-        <ul className={sidebarList}>
-          {notebooks.map(([id, file]) => (
-            <li key={id} className={sidebarListItem}>
-              <div className={sidebarListItemTitle}>{file.name}</div>
               <button onClick={() => del(id)}>del</button>
             </li>
           ))}
@@ -103,19 +99,69 @@ function Header({ children }: React.PropsWithChildren<{}>) {
   return <div className={header}>{children}</div>;
 }
 
-function App() {
-  const selectedNotebook = useAtomValue(ui.selectedNotebook);
+function NotebookMenu() {
+  const [selected, setSelected] = useAtom(ui.selectedNotebook);
+  const notebooks = useAtomValue(notebooksDb.entries);
+  const [_, selectedNotebook] =
+    notebooks.find(([id, nb]) => id === selected) || [];
+  const createItem = useSetAtom(notebooksDb.set);
 
+  return (
+    <Menu>
+      <MenuButton className={menuButton}>
+        {selectedNotebook?.name}
+        <div aria-hidden className={menuTriangle}>
+          ▼
+        </div>
+      </MenuButton>
+      <MenuList className={menuList}>
+        {notebooks.map(([id, notebook]) => (
+          <MenuItem
+            key={id}
+            onSelect={() => setSelected(id)}
+            className={menuItem[id === selected ? "active" : "normal"]}
+          >
+            {notebook.name}
+          </MenuItem>
+        ))}
+        <MenuItem
+          className={menuItem.normal}
+          onSelect={async () => {
+            const name = prompt("Create notebook");
+            if (name) {
+              const id = crypto.randomUUID();
+              await createItem(id, {
+                name,
+                code: "",
+              });
+              setSelected(id);
+            }
+          }}
+        >
+          Add ➕
+        </MenuItem>
+      </MenuList>
+    </Menu>
+  );
+}
+
+function App() {
   return (
     <div className={container}>
       <PanelGroup autoSaveId="main" direction="horizontal" className={panels}>
-        <Panel defaultSize={10}>
-          <Sidebar />
-        </Panel>
-        <PanelResizeHandle className={handle} />
-        <Panel defaultSize={40}>
-          <Header>{selectedNotebook}</Header>
-          <Notebook />
+        <Panel defaultSize={50}>
+          <PanelGroup autoSaveId="first" direction="vertical">
+            <Panel defaultSize={60}>
+              <Header>
+                <NotebookMenu />
+              </Header>
+              <Notebook />
+            </Panel>
+            <PanelResizeHandle className={handleHorizontal} />
+            <Panel>
+              <Sidebar />
+            </Panel>
+          </PanelGroup>
         </Panel>
         <PanelResizeHandle className={handle} />
         <Panel>

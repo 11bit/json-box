@@ -1,10 +1,16 @@
-import { createGlobalTheme, style, globalStyle } from "@vanilla-extract/css";
+import {
+  createGlobalTheme,
+  style,
+  globalStyle,
+  styleVariants,
+} from "@vanilla-extract/css";
 
 export const vars = createGlobalTheme(":root", {
   color: {
     back: "#0A0B0E",
     // back: "#282a36",
     container: "#282a36",
+    popup: "#4d4f5b",
     text: "white",
   },
   space: {
@@ -40,6 +46,53 @@ export const header = style([
   },
 ]);
 
+export const menuButton = style([
+  {
+    display: "flex",
+    alignItems: "center",
+    border: "none",
+    padding: 0,
+  },
+  box,
+  header,
+]);
+
+export const menuList = style({
+  backgroundColor: vars.color.popup,
+  padding: vars.space.medium,
+  fontFamily: vars.font.mono,
+});
+
+const baseMenuItem = {
+  padding: vars.space.medium,
+  selectors: {
+    "&:before": {
+      display: "inline-block",
+      content: "•",
+      opacity: 0,
+      width: vars.space.big,
+    },
+  },
+};
+
+export const menuItem = styleVariants({
+  normal: baseMenuItem,
+  active: [
+    baseMenuItem,
+    {
+      selectors: {
+        "&:before": {
+          opacity: 1,
+        },
+      },
+    },
+  ],
+});
+
+export const menuTriangle = style({
+  marginLeft: 2,
+});
+
 export const container = style({
   height: "100vh",
 });
@@ -51,6 +104,10 @@ export const panels = style({
 
 export const handle = style({
   width: vars.space.small,
+});
+
+export const handleHorizontal = style({
+  height: vars.space.small,
 });
 
 export const sidebarContainer = style([
