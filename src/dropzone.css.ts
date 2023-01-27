@@ -1,12 +1,16 @@
 import { recipe } from "@vanilla-extract/recipes";
+import { vars } from "./main.css";
 
 export const dropzone = recipe({
   base: {
-    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    backgroundColor: vars.color.container,
   },
   variants: {
     active: {
-      yes: { border: "3px green dashed" },
+      yes: { boxShadow: "inset 0px 0px 4px 2px green;" },
       no: {},
     },
   },

@@ -15,6 +15,7 @@ import {
   menuItem,
   menuList,
   menuTriangle,
+  outputPanel,
   panels,
   sidebarContainer,
   sidebarList,
@@ -34,22 +35,24 @@ function Sidebar() {
   const activeId = useAtomValue(ui.selectedNotebook);
 
   return (
-    <div className={sidebarContainer}>
-      <Header>Files</Header>
-      <div className={sidebarPanel}>
-        <ul className={sidebarList}>
-          {files.map(([id]) => (
-            <li key={id} className={sidebarListItem}>
-              <div className={sidebarListItemTitle}>{id}</div>
-              <button onClick={() => addFilesToNotebook(activeId, [id])}>
-                add to notebook
-              </button>
-              <button onClick={() => del(id)}>del</button>
-            </li>
-          ))}
-        </ul>
+    <DropZone>
+      <div className={sidebarContainer}>
+        <Header>Files</Header>
+        <div className={sidebarPanel}>
+          <ul className={sidebarList}>
+            {files.map(([id]) => (
+              <li key={id} className={sidebarListItem}>
+                <div className={sidebarListItemTitle}>{id}</div>
+                <button onClick={() => addFilesToNotebook(activeId, [id])}>
+                  add to notebook
+                </button>
+                <button onClick={() => del(id)}>del</button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </DropZone>
   );
 }
 
@@ -65,6 +68,9 @@ function Notebook() {
         addFilesToNotebook(notebookId, fileIds);
       }}
     >
+      <Header>
+        <NotebookMenu />
+      </Header>
       <Codemirror
         placeholder="Drag'n'drop json file"
         extensions={[javascript()]}
@@ -150,9 +156,6 @@ function App() {
         <Panel defaultSize={50}>
           <PanelGroup autoSaveId="first" direction="vertical">
             <Panel defaultSize={60}>
-              <Header>
-                <NotebookMenu />
-              </Header>
               <Notebook />
             </Panel>
             <PanelResizeHandle className={handleHorizontal} />
@@ -162,7 +165,7 @@ function App() {
           </PanelGroup>
         </Panel>
         <PanelResizeHandle className={handle} />
-        <Panel>
+        <Panel className={outputPanel}>
           <Header>Output</Header>
           <Results />
         </Panel>

@@ -23,10 +23,14 @@ export const vars = createGlobalTheme(":root", {
   },
 });
 
-export const box = style({
+export const outputPanel = style({
   backgroundColor: vars.color.container,
+});
+
+export const box = style({
   paddingLeft: vars.space.big,
   paddingRight: vars.space.big,
+  paddingBottom: vars.space.small,
 });
 
 export const header = style([

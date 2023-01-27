@@ -7,11 +7,12 @@ import { filesDb } from "./store";
 export function DropZone({
   children,
   onAdd,
-}: React.PropsWithChildren<{ onAdd: (fileIds: string[]) => void }>) {
+}: React.PropsWithChildren<{ onAdd?: (fileIds: string[]) => void }>) {
   const addFile = useSetAtom(filesDb.set);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: async (dropped: File[]) => {
+    onDrop: async (dropped: File[], cancelled) => {
+      console.log(dropped, cancelled);
       const ids: string[] = [];
       for (const droppedFile of dropped) {
         await addFile(droppedFile.name, {
@@ -21,9 +22,9 @@ export function DropZone({
         ids.push(droppedFile.name);
       }
 
-      onAdd(ids);
+      onAdd?.(ids);
     },
-    multiple: false,
+    multiple: true,
     noClick: true,
   });
 
