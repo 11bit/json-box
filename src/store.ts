@@ -20,7 +20,7 @@ export const ui = {
 };
 
 // Bootstrap data
-const PLANETS_ID = "a6e02a19-52ad-45b0-bd04-bcfb716c5bab";
+const PLANETS_JSON = "planets.json";
 
 // Notebooks
 export type Notebook = {
@@ -38,7 +38,7 @@ export const notebooksDb = new MiniDb<Notebook>({
   initialData: {
     default: {
       name: "Jupiter's moons",
-      code: `load("${PLANETS_ID}")
+      code: `load("${PLANETS_JSON}")
   .planets
   .filter(p => p.name === "Jupiter")`,
     },
@@ -48,15 +48,13 @@ export const notebooksDb = new MiniDb<Notebook>({
 // Files
 export type JsonFile = {
   content: string;
-  name: string;
   createdAt: number;
 };
 
 export const filesDb = new MiniDb<JsonFile>({
   name: "files",
   initialData: {
-    [PLANETS_ID]: {
-      name: "planets.json",
+    [PLANETS_JSON]: {
       createdAt: Date.now(),
       content: JSON.stringify(planets),
     },

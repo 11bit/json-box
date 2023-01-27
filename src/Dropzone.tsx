@@ -14,13 +14,11 @@ export function DropZone({
     onDrop: async (dropped: File[]) => {
       const ids: string[] = [];
       for (const droppedFile of dropped) {
-        const id = crypto.randomUUID();
-        await addFile(id, {
-          name: droppedFile.name,
+        await addFile(droppedFile.name, {
           content: await droppedFile.text(),
           createdAt: Date.now(),
         });
-        ids.push(id);
+        ids.push(droppedFile.name);
       }
 
       onAdd(ids);

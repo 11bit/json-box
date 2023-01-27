@@ -7,7 +7,6 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 import { Codemirror } from "./Codemirror";
 import {
-  box,
   container,
   handle,
   handleHorizontal,
@@ -26,7 +25,6 @@ import {
 import { filesDb, getNewNotebook, notebooksDb, ui } from "./store";
 import { evaluate } from "./evaluate";
 import { DropZone } from "./Dropzone";
-import { cmLoadExpressionWidget } from "./cm-load-widget";
 import { Menu, MenuButton, MenuItem, MenuList } from "@reach/menu-button";
 
 function Sidebar() {
@@ -40,11 +38,11 @@ function Sidebar() {
       <Header>Files</Header>
       <div className={sidebarPanel}>
         <ul className={sidebarList}>
-          {files.map(([id, file]) => (
+          {files.map(([id]) => (
             <li key={id} className={sidebarListItem}>
-              <div className={sidebarListItemTitle}>{file.name}</div>
+              <div className={sidebarListItemTitle}>{id}</div>
               <button onClick={() => addFilesToNotebook(activeId, [id])}>
-                insert
+                add to notebook
               </button>
               <button onClick={() => del(id)}>del</button>
             </li>
@@ -69,7 +67,7 @@ function Notebook() {
     >
       <Codemirror
         placeholder="Drag'n'drop json file"
-        extensions={[javascript(), cmLoadExpressionWidget]}
+        extensions={[javascript()]}
         value={pipeline.code}
         onChange={(value) => {
           setPipeline({ ...pipeline, code: value });
