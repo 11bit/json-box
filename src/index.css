@@ -23,17 +23,19 @@
 
 button {
   border-radius: 4px;
-  border: 1px solid white;
+  /*  border: 1px solid #555;*/
+  border: none;
   line-height: 100%;
   font-weight: 500;
   font-family: inherit;
   background: none !important;
-  color: white;
+  color: #888;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: white;
+  color: white;
 }
 button:focus,
 button:focus-visible {

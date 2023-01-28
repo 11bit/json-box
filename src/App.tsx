@@ -44,9 +44,9 @@ function Sidebar() {
               <li key={id} className={sidebarListItem}>
                 <div className={sidebarListItemTitle}>{id}</div>
                 <button onClick={() => addFilesToNotebook(activeId, [id])}>
-                  add to notebook
+                  Add to notebook ⤴
                 </button>
-                <button onClick={() => del(id)}>del</button>
+                <button onClick={() => del(id)}>Delete</button>
               </li>
             ))}
           </ul>

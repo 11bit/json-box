@@ -56,6 +56,7 @@ export const menuButton = style([
     alignItems: "center",
     border: "none",
     padding: 0,
+    fontSize: "1rem",
   },
   box,
   header,
@@ -141,8 +142,8 @@ export const sidebarList = style([
 export const sidebarListItem = style([
   {
     display: "flex",
-    gap: 2,
-    marginBottom: 2,
+    gap: vars.space.small,
+    marginBottom: vars.space.small,
   },
 ]);
 
