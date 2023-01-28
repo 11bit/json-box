@@ -21,6 +21,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 button {
   border-radius: 4px;
   /*  border: 1px solid #555;*/

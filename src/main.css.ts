@@ -25,6 +25,8 @@ export const vars = createGlobalTheme(":root", {
 
 export const outputPanel = style({
   backgroundColor: vars.color.container,
+  display: "flex",
+  flexDirection: "column",
 });
 
 export const box = style({
@@ -105,6 +107,7 @@ export const menuTriangle = style({
 
 export const container = style({
   height: "100vh",
+  padding: "8px",
 });
 
 export const panels = style({
@@ -159,9 +162,6 @@ export const sidebarListItemTitle = style({
 globalStyle("body", {
   background: vars.color.back,
   color: vars.color.text,
-  margin: 8,
-});
-
-globalStyle("html", {
-  overflow: "hidden",
+  margin: 0,
+  height: "100vh",
 });

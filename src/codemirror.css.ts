@@ -5,12 +5,12 @@ export const cmContainer = style([
   box,
   {
     height: "100%",
+    minHeight: 0,
   },
 ]);
 
 export const loadWidget = style({
   borderRadius: 4,
-  // border: "1px solid white",
   fontSize: "0.8rem",
 });
 
