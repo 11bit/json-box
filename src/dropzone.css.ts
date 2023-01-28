@@ -1,5 +1,5 @@
 import { recipe } from "@vanilla-extract/recipes";
-import { vars } from "./main.css";
+import { vars } from "./app.css.ts";
 
 export const dropzone = recipe({
   base: {

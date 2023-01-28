@@ -6,24 +6,7 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 import { Codemirror } from "./Codemirror";
-import {
-  container,
-  handle,
-  handleHorizontal,
-  header,
-  headerTitle,
-  menuButton,
-  menuItem,
-  menuList,
-  menuTriangle,
-  outputPanel,
-  panels,
-  sidebarContainer,
-  sidebarList,
-  sidebarListItem,
-  sidebarListItemTitle,
-  sidebarPanel,
-} from "./main.css";
+import * as s from "./app.css";
 import { filesDb, getNewNotebook, notebooksDb, ui } from "./store";
 import { evaluate } from "./evaluate";
 import { DropZone } from "./Dropzone";
@@ -39,7 +22,7 @@ function Sidebar() {
 
   return (
     <DropZone ref={dropzone}>
-      <div className={sidebarContainer}>
+      <div className={s.sidebarContainer}>
         <Header
           right={
             <button onClick={() => dropzone.current?.open()}>Add File</button>
@@ -47,11 +30,11 @@ function Sidebar() {
         >
           Files
         </Header>
-        <div className={sidebarPanel}>
-          <ul className={sidebarList}>
+        <div className={s.sidebarPanel}>
+          <ul className={s.sidebarList}>
             {files.map(([id]) => (
-              <li key={id} className={sidebarListItem}>
-                <div className={sidebarListItemTitle}>{id}</div>
+              <li key={id} className={s.sidebarListItem}>
+                <div className={s.sidebarListItemTitle}>{id}</div>
                 <button onClick={() => addFilesToNotebook(activeId, [id])}>
                   Use in notebook ⤴
                 </button>
@@ -113,8 +96,8 @@ function Header({
   right,
 }: React.PropsWithChildren<{ right?: React.ReactNode }>) {
   return (
-    <div className={header}>
-      <div className={headerTitle}>{children}</div>
+    <div className={s.header}>
+      <div className={s.headerTitle}>{children}</div>
       {right}
     </div>
   );
@@ -129,24 +112,24 @@ function NotebookMenu() {
 
   return (
     <Menu>
-      <MenuButton className={menuButton}>
+      <MenuButton className={s.menuButton}>
         {selectedNotebook?.name}
-        <div aria-hidden className={menuTriangle}>
+        <div aria-hidden className={s.menuTriangle}>
           ▼
         </div>
       </MenuButton>
-      <MenuList className={menuList}>
+      <MenuList className={s.menuList}>
         {notebooks.map(([id, notebook]) => (
           <MenuItem
             key={id}
             onSelect={() => setSelected(id)}
-            className={menuItem[id === selected ? "active" : "normal"]}
+            className={s.menuItem[id === selected ? "active" : "normal"]}
           >
             {notebook.name}
           </MenuItem>
         ))}
         <MenuItem
-          className={menuItem.normal}
+          className={s.menuItem.normal}
           onSelect={async () => {
             const name = prompt("Create notebook");
             if (name) {
@@ -168,21 +151,21 @@ function NotebookMenu() {
 
 function App() {
   return (
-    <div className={container}>
-      <PanelGroup autoSaveId="main" direction="horizontal" className={panels}>
+    <div className={s.container}>
+      <PanelGroup autoSaveId="main" direction="horizontal" className={s.panels}>
         <Panel defaultSize={50}>
           <PanelGroup autoSaveId="first" direction="vertical">
             <Panel defaultSize={60}>
               <Notebook />
             </Panel>
-            <PanelResizeHandle className={handleHorizontal} />
+            <PanelResizeHandle className={s.handleHorizontal} />
             <Panel>
               <Sidebar />
             </Panel>
           </PanelGroup>
         </Panel>
-        <PanelResizeHandle className={handle} />
-        <Panel className={outputPanel}>
+        <PanelResizeHandle className={s.handle} />
+        <Panel className={s.outputPanel}>
           <Header>Output</Header>
           <Results />
         </Panel>
