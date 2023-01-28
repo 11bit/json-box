@@ -36,6 +36,7 @@ export const box = style({
 export const header = style([
   box,
   {
+    display: "flex",
     // marginBottom: vars.space.small,
     fontFamily: vars.font.mono,
     lineHeight: "200%",
@@ -49,6 +50,10 @@ export const header = style([
     // textAlign: 'center'
   },
 ]);
+
+export const headerTitle = style({
+  flex: 1,
+});
 
 export const menuButton = style([
   {

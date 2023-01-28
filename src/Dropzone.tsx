@@ -1,18 +1,21 @@
 import { useSetAtom } from "jotai/react";
+import { forwardRef, useImperativeHandle } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { dropzone } from "./dropzone.css";
 import { filesDb } from "./store";
 
-export function DropZone({
-  children,
-  onAdd,
-}: React.PropsWithChildren<{ onAdd?: (fileIds: string[]) => void }>) {
+export const DropZone = forwardRef(function DropZoneComponent(
+  {
+    children,
+    onAdd,
+  }: React.PropsWithChildren<{ onAdd?: (fileIds: string[]) => void }>,
+  ref
+) {
   const addFile = useSetAtom(filesDb.set);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: async (dropped: File[], cancelled) => {
-      console.log(dropped, cancelled);
+  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
+    onDrop: async (dropped: File[]) => {
       const ids: string[] = [];
       for (const droppedFile of dropped) {
         await addFile(droppedFile.name, {
@@ -28,6 +31,14 @@ export function DropZone({
     noClick: true,
   });
 
+  useImperativeHandle(
+    ref,
+    () => ({
+      open,
+    }),
+    [open]
+  );
+
   return (
     <div
       className={dropzone({ active: isDragActive ? "yes" : "no" })}
@@ -37,4 +48,4 @@ export function DropZone({
       {children}
     </div>
   );
-}
+});

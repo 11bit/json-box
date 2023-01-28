@@ -11,6 +11,7 @@ import {
   handle,
   handleHorizontal,
   header,
+  headerTitle,
   menuButton,
   menuItem,
   menuList,
@@ -27,24 +28,32 @@ import { filesDb, getNewNotebook, notebooksDb, ui } from "./store";
 import { evaluate } from "./evaluate";
 import { DropZone } from "./Dropzone";
 import { Menu, MenuButton, MenuItem, MenuList } from "@reach/menu-button";
+import { useRef } from "react";
 
 function Sidebar() {
+  const dropzone = useRef<{ open: VoidFunction }>();
   const files = useAtomValue(filesDb.entries);
   const del = useSetAtom(filesDb.delete);
   const addFilesToNotebook = useSetAtom(ui.addFilesToNotebook);
   const activeId = useAtomValue(ui.selectedNotebook);
 
   return (
-    <DropZone>
+    <DropZone ref={dropzone}>
       <div className={sidebarContainer}>
-        <Header>Files</Header>
+        <Header
+          right={
+            <button onClick={() => dropzone.current?.open()}>Add File</button>
+          }
+        >
+          Files
+        </Header>
         <div className={sidebarPanel}>
           <ul className={sidebarList}>
             {files.map(([id]) => (
               <li key={id} className={sidebarListItem}>
                 <div className={sidebarListItemTitle}>{id}</div>
                 <button onClick={() => addFilesToNotebook(activeId, [id])}>
-                  Add to notebook ⤴
+                  Use in notebook ⤴
                 </button>
                 <button onClick={() => del(id)}>Delete</button>
               </li>
@@ -99,8 +108,16 @@ function Results() {
   );
 }
 
-function Header({ children }: React.PropsWithChildren<{}>) {
-  return <div className={header}>{children}</div>;
+function Header({
+  children,
+  right,
+}: React.PropsWithChildren<{ right?: React.ReactNode }>) {
+  return (
+    <div className={header}>
+      <div className={headerTitle}>{children}</div>
+      {right}
+    </div>
+  );
 }
 
 function NotebookMenu() {
@@ -142,7 +159,7 @@ function NotebookMenu() {
             }
           }}
         >
-          Add ➕
+          Add
         </MenuItem>
       </MenuList>
     </Menu>
