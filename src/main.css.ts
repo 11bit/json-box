@@ -136,6 +136,7 @@ export const sidebarPanel = style([
   box,
   {
     flex: 1,
+    overflowY: "auto",
   },
 ]);
 
