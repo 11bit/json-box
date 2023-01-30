@@ -157,7 +157,9 @@ export const sidebarListItem = style([
 ]);
 
 export const sidebarListItemTitle = style({
-  flex: 1,
+  flex: "1 1 auto",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
 });
 
 globalStyle("body", {
