@@ -30,33 +30,33 @@ function NotebookPanel() {
     >
       <PanelHeader
         right={
-          <>
-            <button
-              onClick={() => {
-                const newName = prompt("Rename notebook", nb.name);
-                if (newName) {
-                  setNotebook((notebook) => ({
-                    ...(notebook || getNewNotebook()),
-                    name: newName,
-                  }));
-                }
-              }}
-            >
-              Rename
-            </button>
-            {all.length > 1 ? (
+          notebookId !== "default" ? (
+            <>
+              <button
+                onClick={() => {
+                  const newName = prompt("Rename notebook", nb.name);
+                  if (newName) {
+                    setNotebook((notebook) => ({
+                      ...(notebook || getNewNotebook()),
+                      name: newName,
+                    }));
+                  }
+                }}
+              >
+                Rename
+              </button>
               <button
                 onClick={() => {
                   if (confirm("Permanently delete notebook?")) {
                     del(notebookId);
-                    setSelected(all[0]);
+                    setSelected("default");
                   }
                 }}
               >
                 &nbsp;Delete
               </button>
-            ) : null}
-          </>
+            </>
+          ) : null
         }
       >
         <NotebookMenu />

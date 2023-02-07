@@ -22,7 +22,7 @@ export const notebooksDb = new MiniDb<Notebook>({
   name: "notebooks",
   initialData: {
     default: {
-      name: "Jupiter's moons",
+      name: "Default",
       code: `load("planets.json")
   .planets
   .find(p => p.name === "Jupiter")
