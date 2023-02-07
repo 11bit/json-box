@@ -983,10 +983,15 @@ javascript-stringify@^2.0.1:
   resolved "https://registry.yarnpkg.com/javascript-stringify/-/javascript-stringify-2.1.0.tgz#27c76539be14d8bd128219a2d731b09337904e79"
   integrity sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==
 
-jotai-minidb@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/jotai-minidb/-/jotai-minidb-0.0.5.tgz#6b88d04a9c4f5ccbece84ea0e06e730e8dd39058"
-  integrity sha512-u84yp3cdYpqvb3W9pJMnmSqqF1+1N/q62tBzaHCgWiRPfR84Wt23duUlVbTKpK2lYjrcQ8GDzvD53Hmp2ZSNhw==
+jotai-location@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/jotai-location/-/jotai-location-0.4.0.tgz#5797c14833c7cdbf42540869908f117231e83c74"
+  integrity sha512-UqvK/ysq2a38CXWN5qjYq5+VBTKhL7xjF4sTo9GSKFMumtFfprrO34rSOER1RHgsugZWFlB2OuRzrRKyHVBwrg==
+
+jotai-minidb@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/jotai-minidb/-/jotai-minidb-0.0.6.tgz#b2d5fa5a25668d749ad876c193879c82ba6d1e4f"
+  integrity sha512-k78wEJw9ZxNTbprEduI18DKN4xg8YN/akShlI7noGWM9VxnvoZxCEhliTffbh1ZlafR/HWS+sXsZMQEuEqh7lQ==
   dependencies:
     "@rocicorp/resolver" "^1.0.0"
     idb-keyval "^6.2.0"

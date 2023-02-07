@@ -1,19 +1,79 @@
 import "@reach/menu-button/styles.css";
-
+import { Menu, MenuButton, MenuItem, MenuList } from "@reach/menu-button";
+import { useRef } from "react";
 import { javascript } from "@codemirror/lang-javascript";
 import { json } from "@codemirror/lang-json";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
-import { Codemirror } from "./Codemirror";
+import { Codemirror } from "./components/Codemirror/Codemirror";
+import { DropZone } from "./components/Dropzone/Dropzone";
+import { PanelHeader } from "./components/PanelHeader/PanelHeader";
 import * as s from "./app.css";
 import { filesDb, getNewNotebook, notebooksDb, ui } from "./store";
 import { evaluate } from "./evaluate";
-import { DropZone } from "./Dropzone";
-import { Menu, MenuButton, MenuItem, MenuList } from "@reach/menu-button";
-import { useRef } from "react";
 
-function Sidebar() {
+function NotebookPanel() {
+  const notebookId = useAtomValue(ui.selectedNotebook);
+  const del = useSetAtom(notebooksDb.delete);
+  const all = useAtomValue(notebooksDb.keys);
+  const [notebook, setNotebook] = useAtom(notebooksDb.item(notebookId));
+  const nb = notebook || getNewNotebook();
+  const addFilesToNotebook = useSetAtom(ui.addFilesToNotebook);
+  const setSelected = useSetAtom(ui.selectedNotebook);
+
+  return (
+    <DropZone
+      onAdd={(fileIds) => {
+        addFilesToNotebook(notebookId, fileIds);
+      }}
+    >
+      <PanelHeader
+        right={
+          <>
+            <button
+              onClick={() => {
+                const newName = prompt("Rename notebook", nb.name);
+                if (newName) {
+                  setNotebook((notebook) => ({
+                    ...(notebook || getNewNotebook()),
+                    name: newName,
+                  }));
+                }
+              }}
+            >
+              Rename
+            </button>
+            {all.length > 1 ? (
+              <button
+                onClick={() => {
+                  if (confirm("Permanently delete notebook?")) {
+                    del(notebookId);
+                    setSelected(all[0]);
+                  }
+                }}
+              >
+                &nbsp;Delete
+              </button>
+            ) : null}
+          </>
+        }
+      >
+        <NotebookMenu />
+      </PanelHeader>
+      <Codemirror
+        placeholder="Drag'n'drop json file"
+        extensions={[javascript()]}
+        value={nb.code}
+        onChange={(value) => {
+          setNotebook({ ...nb, code: value });
+        }}
+      />
+    </DropZone>
+  );
+}
+
+function FilesPanel() {
   const dropzone = useRef<{ open: VoidFunction }>();
   const files = useAtomValue(filesDb.entries);
   const del = useSetAtom(filesDb.delete);
@@ -23,13 +83,13 @@ function Sidebar() {
   return (
     <DropZone ref={dropzone}>
       <div className={s.sidebarContainer}>
-        <Header
+        <PanelHeader
           right={
             <button onClick={() => dropzone.current?.open()}>Add File</button>
           }
         >
           Files
-        </Header>
+        </PanelHeader>
         <div className={s.sidebarPanel}>
           <ul className={s.sidebarList}>
             {files.map(([id]) => (
@@ -48,34 +108,7 @@ function Sidebar() {
   );
 }
 
-function Notebook() {
-  const notebookId = useAtomValue(ui.selectedNotebook);
-  const [storedPipeline, setPipeline] = useAtom(notebooksDb.item(notebookId));
-  const pipeline = storedPipeline || getNewNotebook();
-  const addFilesToNotebook = useSetAtom(ui.addFilesToNotebook);
-
-  return (
-    <DropZone
-      onAdd={(fileIds) => {
-        addFilesToNotebook(notebookId, fileIds);
-      }}
-    >
-      <Header>
-        <NotebookMenu />
-      </Header>
-      <Codemirror
-        placeholder="Drag'n'drop json file"
-        extensions={[javascript()]}
-        value={pipeline.code}
-        onChange={(value) => {
-          setPipeline({ ...pipeline, code: value });
-        }}
-      />
-    </DropZone>
-  );
-}
-
-function Results() {
+function ResultsPanel() {
   const notebookId = useAtomValue(ui.selectedNotebook);
   const pipeline = useAtomValue(notebooksDb.item(notebookId));
   const f = useAtomValue(filesDb.items);
@@ -91,18 +124,6 @@ function Results() {
   );
 }
 
-function Header({
-  children,
-  right,
-}: React.PropsWithChildren<{ right?: React.ReactNode }>) {
-  return (
-    <div className={s.header}>
-      <div className={s.headerTitle}>{children}</div>
-      {right}
-    </div>
-  );
-}
-
 function NotebookMenu() {
   const [selected, setSelected] = useAtom(ui.selectedNotebook);
   const notebooks = useAtomValue(notebooksDb.entries);
@@ -113,7 +134,7 @@ function NotebookMenu() {
   return (
     <Menu>
       <MenuButton className={s.menuButton}>
-        {selectedNotebook?.name}
+        {selectedNotebook?.name || "Untitled"}
         <div aria-hidden className={s.menuTriangle}>
           ▼
         </div>
@@ -156,18 +177,18 @@ function App() {
         <Panel defaultSize={50}>
           <PanelGroup autoSaveId="first" direction="vertical">
             <Panel defaultSize={60}>
-              <Notebook />
+              <NotebookPanel />
             </Panel>
             <PanelResizeHandle className={s.handleHorizontal} />
             <Panel>
-              <Sidebar />
+              <FilesPanel />
             </Panel>
           </PanelGroup>
         </Panel>
         <PanelResizeHandle className={s.handle} />
         <Panel className={s.outputPanel}>
-          <Header>Output</Header>
-          <Results />
+          <PanelHeader>Output</PanelHeader>
+          <ResultsPanel />
         </Panel>
       </PanelGroup>
     </div>

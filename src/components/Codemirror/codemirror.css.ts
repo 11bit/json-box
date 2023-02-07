@@ -1,5 +1,5 @@
 import { style, globalStyle } from "@vanilla-extract/css";
-import { box, vars } from "./app.css";
+import { box, vars } from "../../app.css";
 
 export const cmContainer = style([
   box,

@@ -35,27 +35,14 @@ export const box = style({
   paddingBottom: vars.space.small,
 });
 
-export const header = style([
-  box,
-  {
+export const headerBlock = style({
     display: "flex",
-    // marginBottom: vars.space.small,
     fontFamily: vars.font.mono,
     lineHeight: "200%",
-    // textDecoration: "underline",
     color: "#BBB",
     paddingTop: vars.space.medium,
     paddingBottom: vars.space.big,
-    // borderBottom: "1px #555 solid",
-    // fontSize: "0.5rem",
-    // textTransform: "uppercase",
-    // textAlign: 'center'
-  },
-]);
-
-export const headerTitle = style({
-  flex: 1,
-});
+})
 
 export const menuButton = style([
   {
@@ -66,7 +53,7 @@ export const menuButton = style([
     fontSize: "1rem",
   },
   box,
-  header,
+  headerBlock,
 ]);
 
 export const menuList = style({

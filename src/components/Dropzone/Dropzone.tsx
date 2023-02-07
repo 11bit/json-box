@@ -3,7 +3,7 @@ import { forwardRef, useImperativeHandle } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { dropzone } from "./dropzone.css";
-import { filesDb } from "./store";
+import { filesDb } from "../../store";
 
 export const DropZone = forwardRef(function DropZoneComponent(
   {
