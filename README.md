@@ -1,4 +1,4 @@
-# Json Box
+# [json-box.vercel.app](https://json-box.vercel.app)
 
 Json Box is a simple demo app for [jota-minidb](https://github.com/11bit/jotai-minidb) — IndexedDB integration for [Jotai](https://jotai.org/).
 
