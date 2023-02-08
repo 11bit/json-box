@@ -9,5 +9,5 @@ Json files and processing code is saved to IndexedDB, that’s why all your work
 ![Demo Json Box](./animation.gif)
 
 # Acknowledgements
-
-Sample JSON files to populate db are taken from [https://github.com/dariusk/corpora](https://github.com/dariusk/corpora)
+- Interface uses beautiful [Martian Mono](https://evilmartians.com/products/martian-mono) font made by Roman Shamin 
+- Sample JSON files to populate db are taken from [https://github.com/dariusk/corpora](https://github.com/dariusk/corpora)
