@@ -13,7 +13,7 @@
     "@codemirror/lang-json": "^6.0.1",
     "@reach/menu-button": "^0.18.0",
     "@uiw/codemirror-theme-dracula": "^4.19.7",
-    "@uiw/react-codemirror": "^4.19.7",
+    "@uiw/react-codemirror": "^4.19.8",
     "@vanilla-extract/recipes": "^0.3.0",
     "jotai": "^1.13.1",
     "jotai-location": "^0.4.0",
